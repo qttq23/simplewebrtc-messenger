@@ -136,4 +136,19 @@ window.addEventListener('load', () => {
             updateChatMessages();
         }
     });
+
+
+    // Remote video was added
+    webrtc.on('videoAdded', (video, peer) => {
+        const id = webrtc.getDomId(peer);
+        const html = remoteVideoTemplate({ id });
+        if (remoteVideosCount === 0) {
+            remoteVideosEl.html(html);
+        } else {
+            remoteVideosEl.append(html);
+        }
+        $(`#${id}`).html(video);
+        $(`#${id} video`).addClass('ui image medium'); // Make video element responsive
+        remoteVideosCount += 1;
+    });
 });
